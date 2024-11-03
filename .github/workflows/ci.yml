@@ -13,7 +13,7 @@ jobs:
     name: build
     runs-on: ubuntu-latest
     steps:
-      - uses: cachix/install-nix-action@v29
+      - uses: cachix/install-nix-action@v30
       - uses: actions/checkout@v4
       - name: Build Caddy example
         run: |
