@@ -1,0 +1,22 @@
+---
+name: Build Example
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+  schedule:
+    - cron: 0 7 2 * *
+
+jobs:
+  build:
+    name: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: cachix/install-nix-action@v29
+      - uses: actions/checkout@v4
+      - name: Build Caddy example
+        run: |
+          cd example
+          nix build --override-input caddy .. .
+          ./result/caddy list-modules | grep -qFx dns.providers.powerdns
