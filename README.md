@@ -16,8 +16,9 @@ look at `example/flake.nix` on how to do that.
 If you don't want to depend on an external flake or if you don't use flakes, you
 can just copy `caddy.nix` and invoke it with `callPackage`:
 
-::nix
+```nix
 caddy-with-modules = pkgs.callPackage ./caddy.nix {
   modules = [{ name = "github.com/caddy-dns/powerdns"; version = "1.0.1"; }];
   vendorHash = "sha256-ez8lcTJegWTIWcaEVJlqcA+M1DTyXF70U5VI+cOHz8s=";
 }
+```
