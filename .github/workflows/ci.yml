@@ -19,4 +19,4 @@ jobs:
         run: |
           cd example
           nix build --override-input caddy .. .
-          ./result/caddy list-modules | grep -qFx dns.providers.powerdns
+          ./result/bin/caddy list-modules | grep -qFx dns.providers.powerdns
