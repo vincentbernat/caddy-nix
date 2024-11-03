@@ -7,8 +7,6 @@ updates:
       prefix: build
     schedule:
       interval: monthly
-    labels:
-      - dependencies
     groups:
       actions:
         patterns:
