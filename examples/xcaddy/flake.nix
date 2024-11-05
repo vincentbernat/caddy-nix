@@ -36,21 +36,19 @@
               # This part is likely wrong!
               remove-references-to -t ${pkgs.iana-etc} -t ${pkgs.tzdata} -t ${pkgs.mailcap} caddy
 
-              cp caddy $out
+              mkdir -p $out/bin
+              cp caddy $out/bin
             '';
 
             # Fixed derivation with hash
             outputHashMode = "recursive";
-            outputHash = "sha256-Iu2xx2cXr1KXv9kqX6gDNe4DMnLUcbzPK817leOomJg=";
+            outputHash = "sha256-00wMN9c1AEXefvSi6JItYybG6PKZaRKoc3fSU2JyWzI=";
             outputHashAlgo = "sha256";
           };
           default = pkgs.symlinkJoin {
             pname = "caddy";
             inherit version;
-            paths = [ pkgs.caddy ];
-            postBuild = ''
-              ln -sf ${xcaddy} $out/bin/caddy
-            '';
+            paths = [ xcaddy pkgs.caddy ];
           };
         };
       });
