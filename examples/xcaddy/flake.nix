@@ -44,12 +44,14 @@
             outputHash = "sha256-Iu2xx2cXr1KXv9kqX6gDNe4DMnLUcbzPK817leOomJg=";
             outputHashAlgo = "sha256";
           };
-          default = pkgs.caddy.overrideAttrs (prev: {
-            # This is inefficient, we will have a full rebuild of caddy just to replace it.
-            postInstall = (prev.postInstall or "") + ''
-              cp ${xcaddy} $out/bin/caddy
+          default = pkgs.symlinkJoin {
+            pname = "caddy";
+            inherit version;
+            paths = [ pkgs.caddy ];
+            postBuild = ''
+              ln -sf ${xcaddy} $out/bin/caddy
             '';
-          });
+          };
         };
       });
 }
