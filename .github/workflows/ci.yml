@@ -17,6 +17,6 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build Caddy example
         run: |
-          cd example
-          nix build --override-input caddy .. .
+          cd examples/flake
+          nix build --override-input caddy ../.. .
           ./result/bin/caddy list-modules | grep -qFx dns.providers.powerdns

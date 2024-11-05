@@ -9,7 +9,7 @@ this flake proposes an alternative.
 ## Usage as input
 
 The first possibility is to use this flake as an input of another flake. You can
-look at `example/flake.nix` on how to do that. The `vendorHash` key can be
+look at `examples/flake/flake.nix` on how to do that. The `vendorHash` key can be
 removed on the first build to get the computed hash.
 
 ## Copy caddy.nix in your own configuration
