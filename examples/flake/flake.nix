@@ -12,8 +12,8 @@
       {
         packages = {
           default = caddy.packages.${system}.default.override {
-            modules = [{ name = "github.com/caddy-dns/powerdns"; version = "1.0.1"; }];
-            vendorHash = "sha256-ez8lcTJegWTIWcaEVJlqcA+M1DTyXF70U5VI+cOHz8s=";
+            modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
+            hash = "sha256-F/jqR4iEsklJFycTjSaW8B/V3iTGqqGOzwYBUXxRKrc=";
           };
         };
       });

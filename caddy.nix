@@ -1,39 +1,35 @@
 { lib
 , pkgs
 , modules ? [ ]
-, vendorHash ? lib.fakeHash
+, hash ? lib.fakeHash
 , caddy ? pkgs.caddy
 }: caddy.overrideAttrs (old: {
-  inherit vendorHash;
-  prePatch =
-    let
-      moduleNames = map (module: module.name) modules;
-    in
-    ''
-      # Add modules to main.go
-      for module in ${toString moduleNames}; do
-        sed -i "/plug in Caddy modules here/a _ \"$module\"" cmd/caddy/main.go
-      done
+  vendorHash = null;
+  subPackages = [ "." ];
+  src = pkgs.stdenv.mkDerivation rec {
+    pname = "caddy-src-with-xcaddy";
+    version = caddy.version;
 
-      # Outside go-modules derivation, copy go.mod and go.sum
-      [ -z "$goModules" ] || \
-        cp "$goModules/go.mod" "$goModules/go.sum" .
+    nativeBuildInputs = [
+      pkgs.go
+      pkgs.xcaddy
+    ];
+    unpackPhase = "true";
+    buildPhase =
+      let
+        withArgs = pkgs.lib.concatMapStrings (module: "--with ${module} ") modules;
+      in
+      ''
+        XCADDY_SKIP_BUILD=1 xcaddy build v${version} ${withArgs}
+        (cd buildenv* && go mod vendor)
+      '';
+    installPhase = ''
+      mv buildenv* $out
     '';
-  preBuild =
-    let
-      moduleNameAndVersions = map (module: lib.escapeShellArg "${module.name}@v${module.version}") modules;
-    in
-    ''
-      # In go-modules derivation, fetch the modules
-      [ -n "$goModules" ] || {
-        for module in ${toString moduleNameAndVersions}; do
-          go get $module
-        done
-        go mod tidy
-      }
-    '';
-  modPostBuild = ''
-    # Once the modules are vendorized, also save go.mod and go.sum
-    cp go.mod go.sum vendor
-  '';
+
+    # Fixed derivation with hash
+    outputHashMode = "recursive";
+    outputHash = hash;
+    outputHashAlgo = "sha256";
+  };
 })
