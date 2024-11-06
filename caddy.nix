@@ -3,7 +3,8 @@
 , modules ? [ ]
 , hash ? lib.fakeHash
 , caddy ? pkgs.caddy
-}: caddy.overrideAttrs (old: {
+, version ? args'.caddy.version
+}@args': caddy.overrideAttrs (old: {
   vendorHash = null;
   subPackages = [ "." ];
   src = pkgs.stdenv.mkDerivation rec {
