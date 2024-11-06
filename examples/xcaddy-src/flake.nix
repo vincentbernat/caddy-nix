@@ -22,6 +22,7 @@
             # Build with xcaddy
             nativeBuildInputs = [
               pkgs.go
+              pkgs.xcaddy
             ];
             unpackPhase = "true";
             buildPhase =
@@ -29,7 +30,7 @@
                 withArgs = pkgs.lib.concatMapStrings (module: "--with ${module} ") modules;
               in
               ''
-                XCADDY_SKIP_BUILD=1 ${pkgs.xcaddy}/bin/xcaddy build v${version} ${withArgs}
+                XCADDY_SKIP_BUILD=1 xcaddy build v${version} ${withArgs}
                 (cd buildenv* && go mod vendor)
               '';
             installPhase = ''

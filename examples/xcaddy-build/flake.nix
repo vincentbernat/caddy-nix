@@ -23,6 +23,7 @@
             nativeBuildInputs = [
               pkgs.removeReferencesTo
               pkgs.go
+              pkgs.xcaddy
             ];
             unpackPhase = "true";
             buildPhase =
@@ -30,7 +31,7 @@
                 withArgs = pkgs.lib.concatMapStrings (module: "--with ${module} ") modules;
               in
               ''
-                ${pkgs.xcaddy}/bin/xcaddy build v${version} ${withArgs}
+                xcaddy build v${version} ${withArgs}
               '';
             installPhase = ''
               # This part is likely wrong!
