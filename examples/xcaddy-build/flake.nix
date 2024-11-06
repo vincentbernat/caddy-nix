@@ -31,6 +31,8 @@
                 withArgs = pkgs.lib.concatMapStrings (module: "--with ${module} ") modules;
               in
               ''
+                export GOCACHE=$TMPDIR/go-cache
+                export GOPATH="$TMPDIR/go"
                 xcaddy build v${version} ${withArgs}
               '';
             installPhase = ''
