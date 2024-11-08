@@ -5,12 +5,16 @@ final: prev: rec {
         { modules
         , hash ? prev.lib.fakeHash
         ,
-        }: caddy.overrideAttrs (oldAttrs: {
+        }:
+        let
+          version = final.caddy.version;
+        in
+        caddy.overrideAttrs (oldAttrs: {
           vendorHash = null;
           subPackages = [ "." ];
-          src = prev.stdenv.mkDerivation rec {
+          src = prev.stdenv.mkDerivation {
             pname = "caddy-src-with-xcaddy";
-            version = final.caddy.version;
+            inherit version;
 
             nativeBuildInputs = [
               prev.go
@@ -29,6 +33,7 @@ final: prev: rec {
               '';
             installPhase = ''
               mv buildenv* $out
+              echo "v${version}" > $out/version
             '';
 
             # Fixed derivation with hash
@@ -36,6 +41,12 @@ final: prev: rec {
             outputHash = hash;
             outputHashAlgo = "sha256";
           };
+          postCheck = (oldAttrs.postCheck or "") + ''
+            [ "$(cat version)" = "v${version}" ] || {
+              echo "Mismatched version $(cat version) in source, while v${version} requested"
+              exit 1
+            }
+          '';
         });
     };
   });
