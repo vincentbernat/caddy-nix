@@ -15,11 +15,17 @@ removed on the first build to get the computed hash.
 ## Copy caddy.nix in your own configuration
 
 If you don't want to depend on an external flake or if you don't use flakes, you
-can just copy `caddy.nix` and invoke it with `callPackage`:
+can just copy `caddy.nix` and import it as an overlay.
 
 ```nix
-caddy-with-modules = pkgs.callPackage ./caddy.nix {
-  modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
-  hash = "sha256-F/jqR4iEsklJFycTjSaW8B/V3iTGqqGOzwYBUXxRKrc=";
-}
+let
+  pkgs = import nixpkgs {
+    inherit system;
+    overlays = [ (import ./caddy.nix) ];
+  };
+in
+  pkgs.caddy.withModules {
+    modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
+    hash = "sha256-F/jqR4iEsklJFycTjSaW8B/V3iTGqqGOzwYBUXxRKrc=";
+  };
 ```
