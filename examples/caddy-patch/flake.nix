@@ -1,5 +1,5 @@
 {
-  description = "Patch Caddy with modules";
+  description = "Patch Caddy with plugins";
   inputs = {
     nixpkgs.url = "nixpkgs";
     flake-utils.url = "github:numtide/flake-utils";
@@ -10,7 +10,7 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
+        plugins = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
         version = pkgs.caddy.version;
       in
       {
@@ -19,12 +19,12 @@
             vendorHash = "sha256-ez8lcTJegWTIWcaEVJlqcA+M1DTyXF70U5VI+cOHz8s=";
             prePatch =
               let
-                moduleNames = map (module: builtins.elemAt (pkgs.lib.splitString "@" module) 0) modules;
+                pluginNames = map (plugin: builtins.elemAt (pkgs.lib.splitString "@" plugin) 0) plugins;
               in
               ''
                 # Add modules to main.go
-                for module in ${toString moduleNames}; do
-                  sed -i "/plug in Caddy modules here/a _ \"$module\"" cmd/caddy/main.go
+                for plugin in ${toString pluginNames}; do
+                  sed -i "/plug in Caddy modules here/a _ \"$plugin\"" cmd/caddy/main.go
                 done
 
                 # Outside go-modules derivation, copy go.mod and go.sum
@@ -33,10 +33,10 @@
               '';
             preBuild =
               ''
-                # In go-modules derivation, fetch the modules
+                # In go-modules derivation, fetch the plugins
                 [ -n "$goModules" ] || {
-                  for module in ${toString modules}; do
-                    go get $module
+                  for plugin in ${toString plugins}; do
+                    go get $plugin
                   done
                   go mod tidy
                 }

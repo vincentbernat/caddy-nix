@@ -1,6 +1,6 @@
-# Flake to build Caddy with additional modules
+# Flake to build Caddy with additional plugins
 
-Building Caddy with additional modules is a bit complex with Nix. In the near
+Building Caddy with additional plugins is a bit complex with Nix. In the near
 future, this should become possible thanks to this [pull request][]. Meanwhile,
 this flake proposes an alternative.
 
@@ -24,8 +24,8 @@ let
     overlays = [ (import ./caddy.nix) ];
   };
 in
-  pkgs.caddy.withModules {
-    modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
+  pkgs.caddy.withPlugins {
+    plugins = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
     hash = "sha256-Vh7JP6RK23Y0E5IDJ3zbBCnF3gKPIav05OMI4ALIcZg=";
   };
 ```

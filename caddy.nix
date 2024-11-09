@@ -1,8 +1,8 @@
 final: prev: rec {
   caddy = prev.caddy.overrideAttrs (oldAttrs: {
     passthru = (oldAttrs.passthru or { }) // {
-      withModules =
-        { modules
+      withPlugins =
+        { plugins
         , hash ? prev.lib.fakeHash
         ,
         }:
@@ -23,7 +23,7 @@ final: prev: rec {
             unpackPhase = "true";
             buildPhase =
               let
-                withArgs = prev.lib.concatMapStrings (module: "--with ${module} ") modules;
+                withArgs = prev.lib.concatMapStrings (plugin: "--with ${plugin} ") plugins;
               in
               ''
                 export GOCACHE=$TMPDIR/go-cache

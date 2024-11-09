@@ -10,7 +10,7 @@
         pkgs = import nixpkgs {
           inherit system;
         };
-        modules = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
+        plugins = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
         version = pkgs.caddy.version;
       in
       {
@@ -27,7 +27,7 @@
             unpackPhase = "true";
             buildPhase =
               let
-                withArgs = pkgs.lib.concatMapStrings (module: "--with ${module} ") modules;
+                withArgs = pkgs.lib.concatMapStrings (plugin: "--with ${plugin} ") plugins;
               in
               ''
                 export GOCACHE=$TMPDIR/go-cache
