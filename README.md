@@ -1,8 +1,8 @@
 # Flake to build Caddy with additional plugins
 
-Building Caddy with additional plugins is a bit complex with Nix. In the near
-future, this should become possible thanks to this [pull request][]. Meanwhile,
-this flake proposes an alternative.
+Building Caddy with additional plugins is a bit complex with Nix. In the future,
+this could become possible thanks to this [pull request][]. Meanwhile, this
+flake proposes an alternative.
 
 [pull request]: https://github.com/NixOS/nixpkgs/pull/317881 "caddy: add support for compiling with Caddy modules (plugins)"
 
