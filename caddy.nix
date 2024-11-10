@@ -29,7 +29,7 @@ final: prev: rec {
               ''
                 export GOCACHE=$TMPDIR/go-cache
                 export GOPATH="$TMPDIR/go"
-                XCADDY_SKIP_BUILD=1 xcaddy build v${version} ${withArgs}
+                XCADDY_SKIP_BUILD=1 TMPDIR="$PWD" xcaddy build v${version} ${withArgs}
                 (cd buildenv* && go mod vendor)
               '';
             installPhase = ''
