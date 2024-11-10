@@ -6,10 +6,11 @@ final: prev: rec {
         , hash ? prev.lib.fakeHash
         ,
         }:
+        caddy.overrideAttrs (finalAttrs: prevAttrs:
         let
-          version = final.caddy.version;
+          version = finalAttrs.version;
         in
-        caddy.overrideAttrs (oldAttrs: {
+        {
           vendorHash = null;
           subPackages = [ "." ];
           src = prev.stdenvNoCC.mkDerivation {
