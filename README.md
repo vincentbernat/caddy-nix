@@ -27,5 +27,17 @@ in
   pkgs.caddy.withPlugins {
     plugins = [ "github.com/caddy-dns/powerdns@v1.0.1" ];
     hash = "sha256-Vh7JP6RK23Y0E5IDJ3zbBCnF3gKPIav05OMI4ALIcZg=";
+  }
+```
+
+With NixOS, you need to use:
+
+```nix
+nixosConfigurations = {
+  "reverse" = nixpkgs.lib.nixosSystem {
+    system = "x86_64-linux";
+    nixpkgs.overlays = [ (import ./caddy.nix) ];
+    /* ... */
   };
+}
 ```
