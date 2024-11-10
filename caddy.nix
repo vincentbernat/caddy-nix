@@ -19,6 +19,7 @@ final: prev: rec {
             nativeBuildInputs = [
               prev.go
               prev.xcaddy
+              prev.cacert
             ];
             unpackPhase = "true";
             buildPhase =

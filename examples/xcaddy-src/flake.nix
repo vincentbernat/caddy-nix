@@ -23,6 +23,7 @@
             nativeBuildInputs = [
               pkgs.go
               pkgs.xcaddy
+              pkgs.cacert
             ];
             unpackPhase = "true";
             buildPhase =
