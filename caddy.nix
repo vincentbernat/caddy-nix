@@ -12,7 +12,7 @@ final: prev: rec {
         caddy.overrideAttrs (oldAttrs: {
           vendorHash = null;
           subPackages = [ "." ];
-          src = prev.stdenv.mkDerivation {
+          src = prev.stdenvNoCC.mkDerivation {
             pname = "caddy-src-with-xcaddy";
             inherit version;
 

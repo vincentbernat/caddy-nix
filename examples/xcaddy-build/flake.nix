@@ -15,7 +15,7 @@
       in
       {
         packages = rec {
-          xcaddy = pkgs.stdenv.mkDerivation {
+          xcaddy = pkgs.stdenvNoCC.mkDerivation {
             pname = "caddy-with-xcaddy";
             inherit version;
 
