@@ -35,7 +35,6 @@ final: prev: rec {
               '';
             installPhase = ''
               mv buildenv* $out
-              echo "v${version}" > $out/version
             '';
 
             # Fixed derivation with hash
