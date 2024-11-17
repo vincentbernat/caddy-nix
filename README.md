@@ -4,7 +4,11 @@ Building Caddy with additional plugins is a bit complex with Nix. In the future,
 this could become possible thanks to this [pull request][]. Meanwhile, this
 flake proposes an alternative.
 
+> [!IMPORTANT]
+> This flake requires [this commit][] and therefore will only work starting from Nixpkgs 24.11.
+
 [pull request]: https://github.com/NixOS/nixpkgs/pull/317881 "caddy: add support for compiling with Caddy modules (plugins)"
+[this commit]: https://github.com/nixOS/nixpkgs/commit/eed069a5bc40ba4d871de7700c7eb8d592e98cb6
 
 ## Usage as input
 
