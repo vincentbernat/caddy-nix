@@ -25,7 +25,7 @@
               pkgs.xcaddy
               pkgs.cacert
             ];
-            unpackPhase = "true";
+            dontUnpack = true;
             buildPhase =
               let
                 withArgs = pkgs.lib.concatMapStrings (plugin: "--with ${plugin} ") plugins;

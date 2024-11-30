@@ -22,7 +22,7 @@ final: prev: rec {
               prev.xcaddy
               prev.cacert
             ];
-            unpackPhase = "true";
+            dontUnpack = true;
             buildPhase =
               let
                 withArgs = prev.lib.concatMapStrings (plugin: "--with ${plugin} ") plugins;
