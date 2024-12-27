@@ -1,7 +1,7 @@
 # Flake to build Caddy with additional plugins
 
-Building Caddy with additional plugins is a bit complex with Nix. In the future,
-this could become possible thanks to this [pull request][]. Meanwhile, this
+Building Caddy with additional plugins is a bit complex with Nix. Thanks to this
+[pull request][], this is now possible in NixOS unstable. For NixOS 24.11, this
 flake proposes an alternative.
 
 > [!IMPORTANT]
