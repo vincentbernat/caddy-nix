@@ -21,6 +21,7 @@ final: prev: rec {
               prev.go
               prev.xcaddy
               prev.cacert
+              prev.git
             ];
             dontUnpack = true;
             buildPhase =
