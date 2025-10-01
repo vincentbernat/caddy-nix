@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: cachix/install-nix-action@v31
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v5
       - name: Build Caddy example
         run: |
           cd examples/flake
